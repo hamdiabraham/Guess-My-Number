@@ -5,6 +5,10 @@ let secretNumber = Math.floor(Math.random() * 20) + 1;
 let score = 20;
 let highScore = 0;
 
+const tampilkanPesan = function (pesan) {
+  document.querySelector(".message").textContent = pesan;
+};
+
 document.querySelector(".check").addEventListener("click", function () {
   const guess = Number(document.querySelector(".guess").value);
 
@@ -12,11 +16,11 @@ document.querySelector(".check").addEventListener("click", function () {
 
   // if there is no input
   if (!guess) {
-    document.querySelector(".message").textContent = "⛔ No number!!";
+    tampilkanPesan("⛔ No number!!");
 
     // when player win the game
   } else if (guess === secretNumber) {
-    document.querySelector(".message").textContent = "✔ Correct number!!";
+    tampilkanPesan("✔ Correct number!!");
     document.querySelector(".number").textContent = secretNumber;
 
     document.querySelector("body").style.backgroundColor = "#60b347";
@@ -28,29 +32,39 @@ document.querySelector(".check").addEventListener("click", function () {
       highScore = score;
       document.querySelector(".highscore").textContent = highScore;
     }
-
-    // when the input is too high
-  } else if (guess > secretNumber) {
+  } else if (guess !== secretNumber) {
     if (score > 1) {
-      document.querySelector(".message").textContent = "📈 Too high!!";
+      tampilkanPesan(guess > secretNumber ? "📈 Too high!!" : "📉 Too low!!");
       score--;
       document.querySelector(".score").textContent = score;
     } else {
-      document.querySelector(".message").textContent = "Game over!! You lose!!";
-      document.querySelector(".score").textContent = 0;
-    }
-
-    // when the input is too high
-  } else if (guess < secretNumber) {
-    if (score > 1) {
-      document.querySelector(".message").textContent = "📉 Too low!!";
-      score--;
-      document.querySelector(".score").textContent = score;
-    } else {
-      document.querySelector(".message").textContent = "Game over!! You lose!!";
+      tampilkanPesan("Game over!! You lose!!");
       document.querySelector(".score").textContent = 0;
     }
   }
+
+  // when the input is too high
+  // else if (guess > secretNumber) {
+  //   if (score > 1) {
+  //     tampilkanPesan("📈 Too high!!");
+  //     score--;
+  //     document.querySelector(".score").textContent = score;
+  //   } else {
+  //     tampilkanPesan("Game over!! You lose!!");
+  //     document.querySelector(".score").textContent = 0;
+  //   }
+
+  //   // when the input is too low
+  // } else if (guess < secretNumber) {
+  //   if (score > 1) {
+  //     tampilkanPesan("📉 Too low!!");
+  //     score--;
+  //     document.querySelector(".score").textContent = score;
+  //   } else {
+  //     tampilkanPesan("Game over!! You lose!!");
+  //     document.querySelector(".score").textContent = 0;
+  //   }
+  // }
 });
 
 // Coding Challenge #1
@@ -72,7 +86,7 @@ document.querySelector(".again").addEventListener("click", function () {
   score = 20;
   secretNumber = Math.floor(Math.random() * 20) + 1;
 
-  document.querySelector(".message").textContent = "Start guessing...";
+  tampilkanPesan("Start guessing...");
   document.querySelector(".score").textContent = score;
   document.querySelector(".number").textContent = "?";
   document.querySelector(".guess").value = "";
